@@ -5,7 +5,7 @@ import {
     Switch
 } from 'react-router-dom'
 import routes from '../../router/router'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 const Layout = props => {
     return (
