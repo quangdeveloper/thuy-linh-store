@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import vn.free.register.constant.ResponseCode;
 
@@ -14,6 +15,7 @@ import java.util.Collections;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ResponseDTO {
 
     @JsonIgnore
@@ -22,6 +24,8 @@ public class ResponseDTO {
     private String code;
 
     private String message;
+
+    private long total;
 
     @JsonProperty("data")
     public Object getBody() {

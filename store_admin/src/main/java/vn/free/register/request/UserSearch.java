@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString
 public class UserSearch {
 
     @JsonProperty("page_index")
@@ -21,11 +22,5 @@ public class UserSearch {
 
     @JsonProperty("status")
     private Integer status;
-
-    public String toString(){
-        return "pageNo: " + pageIndex
-                + "\t pageSize: " + pageSize
-                + "\t keyword: " + keyword;
-    }
 
 }

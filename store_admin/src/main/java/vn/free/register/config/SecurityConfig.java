@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/webjars/**",
-                        "/Register/**"
+                        "/pub/**"
                 ).permitAll()
                 .antMatchers("/**").authenticated();
 

@@ -13,19 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.free.register.constant.ResponseCode;
 import vn.free.register.jwt.JWTTokenProvider;
-import vn.free.register.request.CourseSearch;
 import vn.free.register.request.UserLogin;
 import vn.free.register.response.ResponseDTO;
 import vn.free.register.response.UserLoginRP;
 import vn.free.register.security.UserPrincipal;
-import vn.free.register.validate.CourseValidate;
 
 /**
  * @author quangnv
  */
 @Slf4j
 @RestController
-public class AuthenControlller {
+public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -50,7 +48,7 @@ public class AuthenControlller {
         /** thiết lập authentication */
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserPrincipal userPrincipal =  (UserPrincipal) authentication.getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         String jwt = jwtTokenProvider.generateToken(userPrincipal);
 
         UserLoginRP userDTO = UserLoginRP.builder()
@@ -59,7 +57,7 @@ public class AuthenControlller {
                 .fullName(userPrincipal.getFullName())
                 .email(userPrincipal.getEmail())
                 .phone(userPrincipal.getPhone())
-                .roleId(userPrincipal.getRoleId())
+                .groupRoleId(userPrincipal.getGroupRoleId())
                 .status(userPrincipal.getActive())
                 .token(jwt)
                 .build();

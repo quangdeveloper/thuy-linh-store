@@ -33,8 +33,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
         UUID uuid = UUID.randomUUID();
-        ThreadContext.put("token", uuid.toString());
-        logger.info("Create token request in Thread context:  " + uuid);
+        String token = uuid.toString().replaceAll("-", "");
+        ThreadContext.put("token", token);
+        logger.info("Create token request in Thread context:  " + token);
 
         try {
             String jwt = getJWT(httpServletRequest);
@@ -45,7 +46,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(
                                     userPrincipal,
-                            null,
+                                    null,
                                     userPrincipal.getAuthorities());
                     authenticationToken.setDetails(
                             new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
@@ -57,9 +58,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            log.error("Fail to set authentication "+e);
+            log.error("Set authentication ...fail.", e);
         }
-        filterChain.doFilter(httpServletRequest,httpServletResponse);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     public String getJWT(HttpServletRequest httpServletRequest) {
@@ -69,6 +70,5 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             return bearerToken.substring(7);
         }
         return null;
-
     }
 }

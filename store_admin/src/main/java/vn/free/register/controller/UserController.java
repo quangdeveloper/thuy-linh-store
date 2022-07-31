@@ -1,17 +1,15 @@
 package vn.free.register.controller;
 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.free.register.constant.ResponseCode;
-import vn.free.register.request.CourseSearch;
 import vn.free.register.request.UserSearch;
 import vn.free.register.request.user.NewUserRQ;
+import vn.free.register.response.ActionRes;
 import vn.free.register.response.ResponseDTO;
-import vn.free.register.service.CourseService;
 import vn.free.register.service.UserService;
-import vn.free.register.validate.CourseValidate;
 
 /**
  * @author quangnv
@@ -25,48 +23,42 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static Gson gson = new Gson();
 
     @PostMapping("/search")
     public ResponseEntity<Object> searchUser(@RequestBody UserSearch userSearch) {
 
-        log.info("Call api searchCourse");
-
-
-        return ResponseEntity.ok().body(
-                ResponseDTO.builder()
-                        .data(userService.searchUser(userSearch))
-                        .code(ResponseCode.SUCCESS.getCode())
-                        .message(ResponseCode.SUCCESS.getDesc())
-                        .build()
-        );
-
+        log.info("Input search user: {}", gson.toJson(userSearch));
+        ResponseDTO response = userService.searchUser(userSearch);
+        log.info("Output search user: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody NewUserRQ newUserRQ) {
 
-        log.info("Call api create user");
-        return ResponseEntity.ok().body(
-                userService.createUser(newUserRQ));
-
+        log.info("Input create user: {}", gson.toJson(newUserRQ));
+        ActionRes response = userService.createUser(newUserRQ);
+        log.info("Output create user: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/update")
     public ResponseEntity<Object> updateUser(@RequestBody NewUserRQ newUserRQ) {
 
-        log.info("Call api update user");
-        return ResponseEntity.ok().body(
-                userService.updateUser(newUserRQ));
-
+        log.info("Input update user: {}", gson.toJson(newUserRQ));
+        ActionRes response = userService.updateUser(newUserRQ);
+        log.info("Output update user: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/update-status")
     public ResponseEntity<Object> updateStatusUser(@RequestBody NewUserRQ newUserRQ) {
 
-        log.info("Call api update user");
-        return ResponseEntity.ok().body(
-                userService.updateStatusUser(newUserRQ));
-
+        log.info("Input update status user: {}", gson.toJson(newUserRQ));
+        ActionRes response = userService.updateStatusUser(newUserRQ);
+        log.info("Output update status user: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
     }
 
 

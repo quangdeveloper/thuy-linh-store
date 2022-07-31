@@ -28,7 +28,7 @@ public class UserPrincipal implements UserDetails {
 
     private String phone;
 
-    private Long roleId;
+    private Long groupRoleId;
 
     private String fullName;
 
@@ -55,7 +55,7 @@ public class UserPrincipal implements UserDetails {
 
         this.phone = user.getPhone();
 
-        this.roleId = user.getRoleId();
+        this.groupRoleId = user.getGroupRoleId();
     }
 
     @Override
@@ -127,8 +127,8 @@ public class UserPrincipal implements UserDetails {
         return phone;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public Long getGroupRoleId() {
+        return groupRoleId;
     }
 
     public String getFullName() {

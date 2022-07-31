@@ -16,7 +16,7 @@ public class JWTTokenProvider {
     @Value("${app.jwt.secret}")
     private String SECRET;
 
-    @Value("${app.jwt.expriedTime}")
+    @Value("${app.jwt.expiredTime}")
     private long EXPIRATION_TIME;
 
     public String generateToken(UserPrincipal userPrincipal) {
@@ -48,13 +48,13 @@ public class JWTTokenProvider {
             return true;
 
         } catch (MalformedJwtException ex1) {
-            log.error("invalid jwt token");
+            log.error("Invalid jwt token.");
         } catch (ExpiredJwtException ex2) {
-            log.error("expirate time token");
+            log.error("Token has expired time.");
         } catch (UnsupportedJwtException ex3) {
-            log.error("unsuport jwt token");
+            log.error("Not support jwt token.");
         } catch (IllegalArgumentException ex4) {
-            log.error("JWT claims  in token is empty");
+            log.error("JWT claims in token is empty.");
         }
         return false;
 

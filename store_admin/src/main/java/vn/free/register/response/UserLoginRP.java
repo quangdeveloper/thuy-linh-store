@@ -3,9 +3,11 @@ package vn.free.register.response;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class UserLoginRP {
 
     private Long id;
@@ -14,7 +16,7 @@ public class UserLoginRP {
     private String fullName;
     private String email;
     private String phone;
-    private Long roleId;
+    private Long groupRoleId;
     private Integer status;
     private String token;
 

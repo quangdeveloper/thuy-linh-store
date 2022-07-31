@@ -22,7 +22,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -37,8 +37,8 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "role_id", nullable = false)
-    private Long roleId;
+    @Column(name = "gr_role_id", nullable = false)
+    private Long groupRoleId;
 
     // 1: mo khoa    2: khoa    3: xoa
     @Column(name = "status", nullable = false)

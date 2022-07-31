@@ -7,26 +7,19 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/register?serverTimezone=GMT%2B7&useLegacyDatetimeCode=false
+    url: jdbc:mysql://localhost:3306/thuy_linh?serverTimezone=GMT%2B7&useLegacyDatetimeCode=false
     username: root
     password: quang1998
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
 
-
-
-
 app:
   jwt:
     secret: KYIVtA7915PUEWTqTca74sENpw48u7nkzSJiJmitF7D2PJWOu
-    expriedTime: 6000000
-
-
-image_folder:
-  directory: \Register
+    expiredTime: 6000000

@@ -9,21 +9,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.free.register.constant.ResponseCode;
-import vn.free.register.entity.Course;
-import vn.free.register.entity.Register;
 import vn.free.register.entity.User;
-import vn.free.register.repository.CourseRepository;
 import vn.free.register.repository.UserRepository;
-import vn.free.register.request.CourseSearch;
 import vn.free.register.request.UserSearch;
-import vn.free.register.request.register.RegisterResponse;
 import vn.free.register.request.user.NewUserRQ;
 import vn.free.register.response.ActionRes;
-import vn.free.register.response.PageResponse;
-import vn.free.register.service.CourseService;
+import vn.free.register.response.ResponseDTO;
 import vn.free.register.service.UserService;
 import vn.free.register.util.SecurityUtil;
 
+import java.util.Collections;
 import java.util.Date;
 
 @Slf4j
@@ -37,24 +32,36 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public PageResponse searchUser(UserSearch search) {
+    public ResponseDTO searchUser(UserSearch search) {
 
-        Pageable pageable = PageRequest.of(
-                search.getPageIndex() - 1,
-                search.getPageSize(),
-                Sort.by("id").descending());
+        try {
+            Pageable pageable = PageRequest.of(
+                    search.getPageIndex() - 1,
+                    search.getPageSize(),
+                    Sort.by("id").descending());
 
-        Page<User> page = userRepository.search(
-                search.getKeyword(),
-                search.getStatus(),
-                pageable);
+            Page<User> page = userRepository.search(
+                    search.getKeyword(),
+                    search.getStatus(),
+                    pageable);
 
-        final long total = page.getTotalElements();
+            final long total = page.getTotalElements();
 
-        return PageResponse.builder()
-                .data(page.toList())
-                .total(total)
-                .build();
+            return ResponseDTO.builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .message(ResponseCode.SUCCESS.getDesc())
+                    .data(page.toList())
+                    .total(total)
+                    .build();
+        } catch (Exception ex) {
+            log.error("Search user ...fail. ", ex);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.ERROR.getCode())
+                    .message(ResponseCode.ERROR.getDesc())
+                    .data(Collections.EMPTY_LIST)
+                    .total(0L)
+                    .build();
+        }
     }
 
     @Override
@@ -67,12 +74,12 @@ public class UserServiceImpl implements UserService {
                     .fullName(newUserRQ.getFullName())
                     .email(newUserRQ.getEmail())
                     .phone(newUserRQ.getPhone())
-                    .roleId(newUserRQ.getRoleId())
+                    .groupRoleId(newUserRQ.getGroupRoleId())
                     .status(1)
                     .createdBy(SecurityUtil.getCurrentUsernameId())
                     .createdDate(new Date())
                     .build();
-            
+
             userRepository.save(user);
             return ActionRes.builder()
                     .code(ResponseCode.SUCCESS.getCode())
@@ -80,7 +87,7 @@ public class UserServiceImpl implements UserService {
                     .build();
         } catch (Exception exception) {
 
-            log.error("System error. JPA create user fail ");
+            log.error("Create user ...fail. ", exception);
             return ActionRes.builder()
                     .code(ResponseCode.ERROR.getCode())
                     .message(ResponseCode.ERROR.getDesc())
@@ -97,7 +104,7 @@ public class UserServiceImpl implements UserService {
             User userOld = userRepository.findByID(newUserRQ.getId());
 
             String pass = userOld.getPassword();
-            if (newUserRQ.getPassword() != null && !newUserRQ.getPassword().equalsIgnoreCase("")){
+            if (newUserRQ.getPassword() != null && !newUserRQ.getPassword().equalsIgnoreCase("")) {
                 pass = passwordEncoder.encode(newUserRQ.getPassword());
             }
 
@@ -108,7 +115,7 @@ public class UserServiceImpl implements UserService {
                     .fullName(newUserRQ.getFullName())
                     .email(newUserRQ.getEmail())
                     .phone(newUserRQ.getPhone())
-                    .roleId(newUserRQ.getRoleId())
+                    .groupRoleId(newUserRQ.getGroupRoleId())
                     .status(1)
                     .createdBy(userOld.getCreatedBy())
                     .createdDate(userOld.getCreatedDate())
@@ -123,7 +130,7 @@ public class UserServiceImpl implements UserService {
                     .build();
         } catch (Exception exception) {
 
-            log.error("System error. JPA update user fail ");
+            log.error("Update user ....fail. ", exception);
             return ActionRes.builder()
                     .code(ResponseCode.ERROR.getCode())
                     .message(ResponseCode.ERROR.getDesc())
@@ -134,7 +141,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ActionRes updateStatusUser(NewUserRQ newUserRQ) {
         try {
-
+log.debug("");
             userRepository.updateStatus(
                     newUserRQ.getId(),
                     newUserRQ.getStatus());
@@ -146,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (Exception exception) {
 
-            log.error("System error. JPA update status user fail ");
+            log.error("Update status user ...fail. ", exception);
             return ActionRes.builder()
                     .code(ResponseCode.ERROR.getCode())
                     .message(ResponseCode.ERROR.getDesc())
@@ -154,9 +161,4 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public Object getByID(Long userId) {
-
-        return null;
-    }
 }
