@@ -1,0 +1,12 @@
+.rt-table {
+    white-space: nowrap;
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #3F4254;
+    background-color: transparent;
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    border-spacing: 2px;
+    border-color: grey;
+}

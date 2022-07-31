@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+<defs>
+    <style>.a{fill:none;}.b,.c{fill: #f04852;}.c{fill-rule:evenodd;opacity:0.3;}</style>
+</defs>
+<rect class="a" width="20" height="20"/>
+<path class="b" d="M6,8V18.417a1.25,1.25,0,0,0,1.25,1.25h7.5A1.25,1.25,0,0,0,16,18.417V8Z" transform="translate(-1 -1.333)"/>
+<path class="c" d="M12.5,4.25V3.833A.833.833,0,0,0,11.667,3H10a.833.833,0,0,0-.833.833V4.25H5.417A.417.417,0,0,0,5,4.667v.417a.417.417,0,0,0,.417.417H16.25a.417.417,0,0,0,.417-.417V4.667a.417.417,0,0,0-.417-.417Z" transform="translate(-0.833 -0.5)"/>
+</svg>

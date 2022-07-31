@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <filter id="Path_203" x="22" y="9" width="36" height="71.04" filterUnits="userSpaceOnUse">
+      <feOffset dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#ff9d5b" flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-ic-fail-big">
+      <rect width="80" height="80"/>
+    </clipPath>
+  </defs>
+  <g id="ic-fail-big" clip-path="url(#clip-ic-fail-big)">
+    <g id="Group_1108" data-name="Group 1108" transform="translate(-559 -432)">
+      <circle id="Ellipse_18" data-name="Ellipse 18" cx="40" cy="40" r="40" transform="translate(559 432)" fill="#ff9d5b" opacity="0.18"/>
+      <g id="surface1" transform="translate(571.563 432.094)">
+        <g transform="matrix(1, 0, 0, 1, -12.56, -0.09)" filter="url(#Path_203)">
+          <path id="Path_203-2" data-name="Path 203" d="M24.218,18.906a.607.607,0,0,0-.66.66v27.78a.655.655,0,0,0,.66.72h4.44a.655.655,0,0,0,.66-.72V19.566a.607.607,0,0,0-.66-.66Zm-.42,34.68a.639.639,0,0,0-.36.66v5.04a.607.607,0,0,0,.66.66h4.68a.607.607,0,0,0,.66-.66v-5.04a.607.607,0,0,0-.66-.66H24.1A1,1,0,0,0,23.8,53.586Z" transform="translate(13.56 0.09)" fill="#ff9d5b"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_114" data-name="Rectangle 114" width="80" height="80"/>
+    </clipPath>
+    <filter id="Path_199" x="6.003" y="15.003" width="70" height="60.677" filterUnits="userSpaceOnUse">
+      <feOffset dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#38d687" flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="ic-success-big" clip-path="url(#clip-path)">
+    <g id="success" clip-path="url(#clip-path)">
+      <g id="Group_1080" data-name="Group 1080" transform="translate(-559 -432)">
+        <circle id="Ellipse_18" data-name="Ellipse 18" cx="40" cy="40" r="40" transform="translate(559 432)" fill="rgba(56,214,135,0.2)" opacity="0.4"/>
+        <g transform="matrix(1, 0, 0, 1, 559, 432)" filter="url(#Path_199)">
+          <path id="Path_199-2" data-name="Path 199" d="M40.221,5.293,15.69,29.824,6.365,20.5,3.293,23.57l12.4,12.4,27.6-27.6Z" transform="translate(17.71 19.71)" fill="#38d687"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

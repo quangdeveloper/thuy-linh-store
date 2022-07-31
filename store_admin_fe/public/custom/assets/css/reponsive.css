@@ -1,0 +1,168 @@
+@media (min-width: 992px) {
+  
+  .header.header-fixed {
+    height: 80px;
+}
+.header-menu .brand-logo{display: none;}
+.aside-minimize .header-menu .brand-logo{display: block;}
+  .brand {
+    border-bottom: 1px solid #ebedf3;height: 80px;
+  }
+  .bottom {display: inline-block; width: 100%;}
+  .dataTables_length {
+    float: left;
+}
+  .dataTables_paginate {
+    float: right;
+}
+  .aside-fixed .wrapper {
+    padding-top: 80px;
+}
+
+.brand .brand-logo {
+  position: absolute;
+  left: 50%;
+  top: 9.5px;
+  margin-left: -62px;
+}
+    .show-mobile {display: none;}
+    .aside-minimize-hover .brand .brand-toggle .svg-icon svg {
+      -webkit-transition: all 0.15s ease;
+      -o-transition: all 0.15s ease;
+      transition: all 0.15s ease;
+      -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }    
+  }
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 991.98px) {
+    .td1 {
+      min-width: 50px;
+  }
+  .td2 {
+    min-width: 100px;
+}
+.td3 {
+  min-width: 50px;
+}
+.td4 {
+  min-width: 50px;
+}
+.td5 {
+  min-width: 50px;
+}
+.td6 {
+  min-width: 100px;
+}
+.td7 {
+  min-width: 80px;
+}
+.td8 {
+  min-width: 100px;
+}
+.td9 {
+  min-width: 50px;
+}
+.td10 {
+  min-width: 50px;
+}
+
+.th1 {
+  min-width: 50px;
+}
+.th2 {
+min-width: 50px;
+}
+.th3 {
+min-width: 100px;
+}
+.th4 {
+min-width: 100px;
+}
+.th5 {
+min-width: 70px;
+}
+.th6 {
+min-width: 120px;
+}
+.th7 {
+min-width: 80px;
+}
+.th8 {
+min-width: 110px;
+}
+.th9 {
+min-width: 120px;
+}
+.th10 {
+min-width: 50px;
+}
+    .dataTables_scrollHead {
+      top: 54px;
+  }
+    .tool-action .text-right {
+      padding: 0 15px;
+  }
+    .card.card-custom > .card-body {
+      padding: 15px;
+  }
+    .subheader.subheader-solid {
+      margin: 0 15px;
+  }
+    .title-main {
+      font-size: 18px;
+  }
+    #kt_aside_mobile_toggle {
+      transform: rotate(180deg);
+  }
+    .header-mobile-fixed .header-mobile {
+      z-index: 100;
+  }
+    .login.login-1 .aside-img {
+      min-height: 100px !important;
+  }
+    .card-filter .card-body {
+        padding: 15px;
+      }
+    .header-mobile img {
+        height: 45px; width: auto;
+    }
+    .aside-overlay {
+        background: rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: 1000;
+        -webkit-animation: animation-offcanvas-fade-in .6s ease 1;
+        animation: animation-offcanvas-fade-in .6s ease 1;
+    }
+    .hidden-mobile {display: none;}
+    .aside.aside-on {
+        left: 0;
+    }
+    .action-tools {background-color: #fff;}
+    .aside.aside-on .brand {
+        display: block;
+    }
+    .aside.aside-on .brand .brand-toggle{
+        display: none;
+    }
+    .brand .brand-logo {
+        position: absolute;
+        left: 50%; top: 10px;
+        margin-left: -60px;
+    }
+    .logo-mobile {
+      position: absolute;
+      left: 50%;
+      margin-left: -35px;
+  }
+  }

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <filter id="Path_230" x="7.509" y="12.509" width="66.395" height="66.395" filterUnits="userSpaceOnUse">
+      <feOffset dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#fe3c4c" flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-ic-waring-big">
+      <rect width="80" height="80"/>
+    </clipPath>
+  </defs>
+  <g id="ic-waring-big" clip-path="url(#clip-ic-waring-big)">
+    <g id="Group_1108" data-name="Group 1108" transform="translate(-559 -432)">
+      <circle id="Ellipse_18" data-name="Ellipse 18" cx="40" cy="40" r="40" transform="translate(559 432)" fill="#fe3c4c" opacity="0.18"/>
+      <g transform="matrix(1, 0, 0, 1, 559, 432)" filter="url(#Path_230)">
+        <path id="Path_230-2" data-name="Path 230" d="M7.632,4.293,4.293,7.632,19.152,22.491,4.293,37.349l3.339,3.339L22.491,25.83,37.349,40.688l3.339-3.339L25.83,22.491,40.688,7.632,37.349,4.293,22.491,19.152Z" transform="translate(18.22 18.22)" fill="#fe3c4c"/>
+      </g>
+    </g>
+  </g>
+</svg>
