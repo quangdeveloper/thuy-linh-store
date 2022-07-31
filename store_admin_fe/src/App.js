@@ -6,7 +6,7 @@ import NotFound from './containers/not_found/NotFound';
 import AuthGuard from './shared/auth_guard/auth-guard';
 import { Login, ForgotPassword } from './components/authentication';
 import Layout from './containers/layout';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
