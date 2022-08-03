@@ -36,7 +36,7 @@ public class PublicController {
 
         log.info("Input create requestTxn: {}", gson.toJson(requestTxnRQ));
         ActionRes response = requestTxnService.createRequestTxn(requestTxnRQ);
-        log.info("Output create user: {}", gson.toJson(response));
+        log.info("Output create requestTxn: {}", gson.toJson(response));
         return ResponseEntity.ok().body(response);
     }
 
