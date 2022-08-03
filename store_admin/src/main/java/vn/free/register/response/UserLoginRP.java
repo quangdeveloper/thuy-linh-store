@@ -15,7 +15,9 @@ public class UserLoginRP {
     private  String password;
     private String fullName;
     private String email;
-    private String phone;
+    private String mobile;
+    private String address;
+    private String dateBorn;
     private Long groupRoleId;
     private Integer status;
     private String token;

@@ -1,6 +1,7 @@
 package vn.free.register.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,8 +13,8 @@ import vn.free.register.constant.ResponseCode;
 import vn.free.register.constant.StatusCode;
 import vn.free.register.entity.User;
 import vn.free.register.repository.UserRepository;
-import vn.free.register.request.UserSearch;
-import vn.free.register.request.user.NewUserRQ;
+import vn.free.register.request.user.UserSearch;
+import vn.free.register.request.user.UserRQ;
 import vn.free.register.response.ActionRes;
 import vn.free.register.response.ResponseDTO;
 import vn.free.register.service.UserService;
@@ -68,13 +69,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ActionRes createUser(NewUserRQ newUserRQ) {
+    public ActionRes createUser(UserRQ userRQ) {
 
         try {
-            log.debug("Begin create user: {}", newUserRQ);
-            User userOld = userRepository.findByUsernameAll(newUserRQ.getUsername());
+            log.debug("Begin create user: {}", userRQ);
+            if (StringUtils.isEmpty(userRQ.getUsername())
+                    || StringUtils.isEmpty(userRQ.getPassword())
+                    || userRQ.getGroupRoleId() == null
+                    || userRQ.getGroupRoleId() == 0
+                    || StringUtils.isEmpty(userRQ.getFullName())
+                    || StringUtils.isEmpty(userRQ.getMobile())
+                    || StringUtils.isEmpty(userRQ.getAddress())
+                    || StringUtils.isEmpty(userRQ.getDateBorn())
+            ) {
+                log.debug("Data request invalid.");
+                return ActionRes.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+            User userOld = userRepository.findByUsernameAll(userRQ.getUsername());
             if (userOld != null) {
-                log.debug("UserName Existed. userName: {} ", newUserRQ.getUsername());
+                log.debug("UserName Existed. userName: {} ", userRQ.getUsername());
                 return ActionRes.builder()
                         .code(ResponseCode.EXISTS.getCode())
                         .message(ResponseCode.EXISTS.getDesc(OBJECT))
@@ -82,12 +98,14 @@ public class UserServiceImpl implements UserService {
             }
 
             User user = User.builder()
-                    .username(newUserRQ.getUsername())
-                    .password(passwordEncoder.encode(newUserRQ.getPassword()))
-                    .fullName(newUserRQ.getFullName())
-                    .email(newUserRQ.getEmail())
-                    .phone(newUserRQ.getPhone())
-                    .groupRoleId(newUserRQ.getGroupRoleId())
+                    .username(userRQ.getUsername())
+                    .password(passwordEncoder.encode(userRQ.getPassword()))
+                    .groupRoleId(userRQ.getGroupRoleId())
+                    .fullName(userRQ.getFullName())
+                    .email(userRQ.getEmail())
+                    .mobile(userRQ.getMobile())
+                    .address(userRQ.getAddress())
+                    .dateBorn(userRQ.getDateBorn())
                     .status(StatusCode.ACTIVE.getCode())
                     .createdBy(SecurityUtil.getCurrentUsernameId())
                     .createdDate(new Date())
@@ -96,8 +114,8 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             log.debug("Create user successful.");
             return ActionRes.builder()
-                    .code(ResponseCode.SUCCESS.getCode())
-                    .message(ResponseCode.SUCCESS.getDesc(OBJECT))
+                    .code(ResponseCode.CREATE_SUCCESS.getCode())
+                    .message(ResponseCode.CREATE_SUCCESS.getDesc(OBJECT))
                     .build();
         } catch (Exception exception) {
 
@@ -110,14 +128,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ActionRes updateUser(NewUserRQ newUserRQ) {
+    public ActionRes updateUser(UserRQ userRQ) {
 
         try {
-            log.debug("Begin update user: {}", newUserRQ);
-
-            User userOld = userRepository.findByID(newUserRQ.getId());
+            log.debug("Begin update user: {}", userRQ);
+            User userOld = userRepository.findByID(userRQ.getId());
             if (userOld == null) {
-                log.debug("UserName not exists. userId: {} ", newUserRQ.getId());
+                log.debug("UserName not exists. userId: {} ", userRQ.getId());
                 return ActionRes.builder()
                         .code(ResponseCode.NOT_EXISTS.getCode())
                         .message(ResponseCode.NOT_EXISTS.getDesc(OBJECT))
@@ -125,13 +142,15 @@ public class UserServiceImpl implements UserService {
             }
 
             User user = User.builder()
-                    .id(newUserRQ.getId())
+                    .id(userRQ.getId())
                     .username(userOld.getUsername())
                     .password(userOld.getPassword())
-                    .fullName(newUserRQ.getFullName())
-                    .email(newUserRQ.getEmail())
-                    .phone(newUserRQ.getPhone())
-                    .groupRoleId(newUserRQ.getGroupRoleId())
+                    .groupRoleId(userRQ.getGroupRoleId())
+                    .fullName(userRQ.getFullName())
+                    .email(userRQ.getEmail())
+                    .mobile(userRQ.getMobile())
+                    .address(userRQ.getAddress())
+                    .dateBorn(userRQ.getDateBorn())
                     .status(userOld.getStatus())
                     .createdBy(userOld.getCreatedBy())
                     .createdDate(userOld.getCreatedDate())
@@ -157,19 +176,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ActionRes updateStatusUser(NewUserRQ newUserRQ) {
+    public ActionRes updateStatusUser(UserRQ userRQ) {
         try {
-            log.debug("Begin update status user: {}", newUserRQ);
-            User user = userRepository.findByID(newUserRQ.getId());
+            log.debug("Begin update status user: {}", userRQ);
+            User user = userRepository.findByID(userRQ.getId());
             if (user == null) {
-                log.debug("User not Exists. userId: {} ", newUserRQ.getId());
+                log.debug("User not Exists. userId: {} ", userRQ.getId());
                 return ActionRes.builder()
                         .code(ResponseCode.NOT_EXISTS.getCode())
                         .message(ResponseCode.NOT_EXISTS.getDesc(OBJECT))
                         .build();
             }
 
-            userRepository.updateStatus(newUserRQ.getId(), newUserRQ.getStatus());
+            userRepository.updateStatus(userRQ.getId(), userRQ.getStatus());
             log.error("Update status user successful.");
             return ActionRes.builder()
                     .code(ResponseCode.UPDATE_SUCCESS.getCode())

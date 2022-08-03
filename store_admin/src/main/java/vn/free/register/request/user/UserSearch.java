@@ -1,4 +1,4 @@
-package vn.free.register.request;
+package vn.free.register.request.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

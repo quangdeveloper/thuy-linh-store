@@ -10,43 +10,28 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "user")
+@Table(name = "request_txn")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class RequestTxn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
-    private String username;
+    @Column(name = "cus_mobile", nullable = false)
+    private String customerMobile;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "cus_name", nullable = false)
+    private String customerName;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+    @Column(name = "date_req", nullable = false)
+    private Date dateRequest;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "mobile", nullable = false)
-    private String mobile;
-
-    @Column(name = "address", nullable = false)
-    private String address;
-
-    @Column(name = "date_born", nullable = false)
-    private String dateBorn;
-
-    @Column(name = "gr_role_id", nullable = false)
-    private Long groupRoleId;
-
-    // 1: mo khoa    2: khoa    3: xoa
+    // 1: khoi tao   2: đã xem    3: xoa
     @Column(name = "status", nullable = false)
     private Integer status;
 
@@ -62,8 +47,4 @@ public class User {
 
     @Column(name = "updated_by")
     private String updatedBy;
-
-
-
-
 }

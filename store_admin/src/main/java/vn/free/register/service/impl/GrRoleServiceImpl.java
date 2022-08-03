@@ -2,28 +2,14 @@ package vn.free.register.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.free.register.constant.ResponseCode;
-import vn.free.register.constant.StatusCode;
 import vn.free.register.entity.GroupRole;
-import vn.free.register.entity.User;
 import vn.free.register.repository.GroupRoleRepository;
-import vn.free.register.repository.UserRepository;
-import vn.free.register.request.UserSearch;
-import vn.free.register.request.user.NewUserRQ;
-import vn.free.register.response.ActionRes;
 import vn.free.register.response.ResponseDTO;
 import vn.free.register.service.GroupRoleService;
-import vn.free.register.service.UserService;
-import vn.free.register.util.SecurityUtil;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j

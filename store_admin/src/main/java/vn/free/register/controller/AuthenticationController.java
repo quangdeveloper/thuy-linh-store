@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.free.register.constant.ResponseCode;
 import vn.free.register.jwt.JWTTokenProvider;
-import vn.free.register.request.UserLogin;
+import vn.free.register.request.user.UserLogin;
 import vn.free.register.response.ResponseDTO;
 import vn.free.register.response.UserLoginRP;
 import vn.free.register.security.UserPrincipal;
@@ -54,10 +54,12 @@ public class AuthenticationController {
         UserLoginRP userDTO = UserLoginRP.builder()
                 .id(userPrincipal.getId())
                 .username(userPrincipal.getUsername())
+                .groupRoleId(userPrincipal.getGroupRoleId())
                 .fullName(userPrincipal.getFullName())
                 .email(userPrincipal.getEmail())
-                .phone(userPrincipal.getPhone())
-                .groupRoleId(userPrincipal.getGroupRoleId())
+                .mobile(userPrincipal.getMobile())
+                .address(userPrincipal.getAddress())
+                .dateBorn(userPrincipal.getDateBorn())
                 .status(userPrincipal.getActive())
                 .token(jwt)
                 .build();
@@ -69,6 +71,5 @@ public class AuthenticationController {
                         .message(ResponseCode.SUCCESS.getDesc())
                         .build()
         );
-
     }
 }

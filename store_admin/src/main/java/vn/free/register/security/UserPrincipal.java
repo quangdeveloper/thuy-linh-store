@@ -26,7 +26,11 @@ public class UserPrincipal implements UserDetails {
 
     private String email;
 
-    private String phone;
+    private String mobile;
+
+    private String address;
+
+    private String dateBorn;
 
     private Long groupRoleId;
 
@@ -53,7 +57,11 @@ public class UserPrincipal implements UserDetails {
 
         this.email = user.getEmail();
 
-        this.phone = user.getPhone();
+        this.mobile = user.getMobile();
+
+        this.address = user.getAddress();
+
+        this.dateBorn = user.getDateBorn();
 
         this.groupRoleId = user.getGroupRoleId();
     }
@@ -123,8 +131,16 @@ public class UserPrincipal implements UserDetails {
         return email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDateBorn() {
+        return dateBorn;
     }
 
     public Long getGroupRoleId() {

@@ -10,13 +10,15 @@ import java.util.Date;
 @Slf4j
 public class DateUtil {
 
+    public static String DATE_TIME_FORMAT_V1 = "yyyy-mm-dd hh:mm:ss";
+
     public static Date convertStringToDate(String date, String format) {
         try {
             DateFormat parser = new SimpleDateFormat(format);
             Date dateResult = parser.parse(date);
             return dateResult;
         } catch (ParseException parseExp) {
-            log.warn(" System error. Parse String to Date  {}  Exception", date, parseExp);
+            log.warn(" System error. Parse String to Date  {}  Exception. ", date, parseExp);
             return new Date();
         }catch (Exception exp){
             log.warn(" System error. Exception", exp);

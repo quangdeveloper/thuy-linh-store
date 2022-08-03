@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class NewUserRQ {
+public class UserRQ {
 
     private Long id;
 
@@ -16,7 +16,11 @@ public class NewUserRQ {
 
     private String email;
 
-    private String phone;
+    private String mobile;
+
+    private String address;
+
+    private String dateBorn;
 
     @JsonProperty("full_name")
     private String fullName;
