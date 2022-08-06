@@ -15,8 +15,8 @@ class App extends Component {
   render = () => (
     <BrowserRouter>
       <Helmet
-        titleTemplate="Quản lí tuyển sinh"
-        defaultTitle="Quản lí tuyển sinh"
+        titleTemplate="Thủy Linh Store"
+        defaultTitle="Thủy Linh Store"
       >
       <meta name="description" content="Online public service application" />
       </Helmet>

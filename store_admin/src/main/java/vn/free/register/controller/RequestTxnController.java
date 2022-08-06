@@ -42,7 +42,7 @@ public class RequestTxnController {
     }
 
     @PostMapping("/update-status")
-    public ResponseEntity<Object> updateStatusUser(@RequestBody RequestTxnRQ requestTxnRQ) {
+    public ResponseEntity<Object> updateStatusRequestTxn(@RequestBody RequestTxnRQ requestTxnRQ) {
 
         log.info("Input update status requestTxn: {}", gson.toJson(requestTxnRQ));
         ActionRes response = requestTxnService.updateStatusRequestTxn(requestTxnRQ);

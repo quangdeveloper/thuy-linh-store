@@ -34,7 +34,7 @@ public class PaymentTxn {
     @Column(name = "total_amount", nullable = false)
     private Long totalAmount;
 
-    @Column(name = "cancel_desc", nullable = false)
+    @Column(name = "cancel_desc")
     private String cancelDesc;
 
     // 1: khoi tao   2: cho thanh toan    3: da thanh toan  4: da huy

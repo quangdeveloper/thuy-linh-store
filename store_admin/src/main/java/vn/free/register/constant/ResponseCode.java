@@ -10,6 +10,7 @@ public enum  ResponseCode {
     UPDATE_SUCCESS("02", "Cập nhật OBJ thành công."),
 
     INVALID_DATA("05", "Dữ liệu OBJ không hợp lệ."),
+    INVALID_AMOUNT("06", "Số tiền không hợp lệ."),
     EXISTS("07", "Thông tin OBJ đã tồn tại trong hệ thống."),
     NOT_EXISTS("09", "Thông tin OBJ không tồn tại trong hệ thống."),
 

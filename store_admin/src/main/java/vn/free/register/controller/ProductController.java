@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @PostMapping("/get-by-id")
-    public ResponseEntity<Object> searchProduct(@RequestBody ProductRQ productRQ) {
+    public ResponseEntity<Object> getByIdProduct(@RequestBody ProductRQ productRQ) {
 
         log.info("Input get product by id: {}", gson.toJson(productRQ));
         ResponseDTO response = productService.getProductById(productRQ);
