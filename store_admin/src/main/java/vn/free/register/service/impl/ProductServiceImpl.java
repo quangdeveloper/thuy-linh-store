@@ -57,8 +57,15 @@ public class ProductServiceImpl implements ProductService {
                     search.getPageSize(),
                     Sort.by("id").descending());
 
-            Date fromDate = DateUtil.convertStringToDate(search.getFromDate(), "yyyy-MM-dd");
-            Date toDate = DateUtil.convertStringToDate(search.getToDate(), "yyyy-MM-dd");
+            Date fromDate = null;
+            Date toDate = null;
+            if (StringUtils.isNotEmpty(search.getFromDate())) {
+                fromDate = DateUtil.convertStringToDate(search.getFromDate(), "yyyy-MM-dd");
+            }
+            if (StringUtils.isNotEmpty(search.getToDate())) {
+                toDate = DateUtil.convertStringToDate(search.getToDate(), "yyyy-MM-dd");
+            }
+
             Page<Product> page = productRepository.search(
                     search.getKeyword(),
                     search.getStatus(),
@@ -123,14 +130,12 @@ public class ProductServiceImpl implements ProductService {
         try {
             log.debug("Begin create product: {}", productRQ);
             if (StringUtils.isEmpty(productRQ.getCode())
+                    || productRQ.getCode().length() != 10
                     || StringUtils.isEmpty(productRQ.getName())
                     || StringUtils.isEmpty(productRQ.getLogo())
-                    || productRQ.getQuantity() == null
-                    || productRQ.getQuantity() == 0
-                    || productRQ.getPriceImport() == null
-                    || productRQ.getPriceImport() == 0
-                    || productRQ.getPriceExport() == null
-                    || productRQ.getPriceExport() == 0
+                    || productRQ.getQuantity() == null || productRQ.getQuantity() == 0
+                    || productRQ.getPriceImport() == null || productRQ.getPriceImport() == 0
+                    || productRQ.getPriceExport() == null || productRQ.getPriceExport() == 0
             ) {
                 log.debug("Data request invalid.");
                 return ActionRes.builder()
@@ -163,7 +168,7 @@ public class ProductServiceImpl implements ProductService {
 
             Product productRs = productRepository.save(product);
             if (productRs != null && product.getId() != null) {
-                insertProductImg(productRQ.getProductImages());
+                insertProductImg(productRQ.getProductImages(), product.getId());
             }
 
             log.debug("Create product successful.");
@@ -186,14 +191,13 @@ public class ProductServiceImpl implements ProductService {
         try {
             log.debug("Begin update product: {}", productRQ);
             if (StringUtils.isEmpty(productRQ.getCode())
+                    || productRQ.getCode().length() != 10
                     || StringUtils.isEmpty(productRQ.getName())
                     || StringUtils.isEmpty(productRQ.getLogo())
-                    || productRQ.getQuantity() == null
-                    || productRQ.getQuantity() == 0
-                    || productRQ.getPriceImport() == null
-                    || productRQ.getPriceImport() == 0
-                    || productRQ.getPriceExport() == null
-                    || productRQ.getPriceExport() == 0
+                    || productRQ.getQuantity() == null || productRQ.getQuantity() == 0
+                    || productRQ.getPriceImport() == null || productRQ.getPriceImport() == 0
+                    || productRQ.getPriceExport() == null || productRQ.getPriceExport() == 0
+                    || productRQ.getId() == null || productRQ.getId() == 0
             ) {
                 log.debug("Data request invalid.");
                 return ActionRes.builder()
@@ -210,6 +214,18 @@ public class ProductServiceImpl implements ProductService {
                         .build();
             }
 
+            //check ma san pham cap nhat moi da co trong he thong ?
+            if (!productOld.getCode().equals(productRQ.getCode())) {
+                Product productByCode = productRepository.findByCode(productRQ.getCode());
+                if (productByCode != null) {
+                    log.debug("Product Code Existed. code: {} ", productRQ.getCode());
+                    return ActionRes.builder()
+                            .code(ResponseCode.INVALID_DATA.getCode())
+                            .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                            .build();
+                }
+            }
+
             Product product = Product.builder()
                     .id(productRQ.getId())
                     .code(productRQ.getCode())
@@ -221,19 +237,21 @@ public class ProductServiceImpl implements ProductService {
                     .priceExport(productRQ.getPriceExport())
                     .quantity(productRQ.getQuantity())
                     .status(StatusCode.ACTIVE.getCode())
+                    .createdBy(productOld.getCreatedBy())
+                    .createdDate(productOld.getCreatedDate())
                     .updatedBy(SecurityUtil.getCurrentUsernameId())
                     .updatedDate(new Date())
                     .build();
 
             Product productRs = productRepository.save(product);
             if (productRs != null && product.getId() != null) {
-                updateProductImg(productRQ.getProductImages());
+                updateProductImg(productRQ.getProductImages(), product.getId());
             }
 
             log.debug("Update product successful.");
             return ActionRes.builder()
-                    .code(ResponseCode.CREATE_SUCCESS.getCode())
-                    .message(ResponseCode.CREATE_SUCCESS.getDesc(OBJECT))
+                    .code(ResponseCode.UPDATE_SUCCESS.getCode())
+                    .message(ResponseCode.UPDATE_SUCCESS.getDesc(OBJECT))
                     .build();
         } catch (Exception exception) {
 
@@ -258,8 +276,12 @@ public class ProductServiceImpl implements ProductService {
                         .build();
             }
 
-            productRepository.updateStatus(product.getId(), product.getStatus());
-            log.error("Update status product successful.");
+            product.setStatus(productRQ.getStatus());
+            product.setUpdatedBy(SecurityUtil.getCurrentUsernameId());
+            product.setUpdatedDate(new Date());
+            productRepository.save(product);
+
+            log.debug("Update status product successful.");
             return ActionRes.builder()
                     .code(ResponseCode.UPDATE_SUCCESS.getCode())
                     .message(ResponseCode.UPDATE_SUCCESS.getDesc(OBJECT))
@@ -274,13 +296,13 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private boolean insertProductImg(List<ProductImgRQ> images) {
+    private boolean insertProductImg(List<ProductImgRQ> images, Long productId) {
         try {
             if (!images.isEmpty()) {
                 log.debug("Begin insert product images");
                 for (ProductImgRQ productImgRQ : images) {
                     ProductImg productImg = ProductImg.builder()
-                            .productId(productImgRQ.getProductId())
+                            .productId(productId)
                             .image(productImgRQ.getImage())
                             .status(StatusCode.ACTIVE.getCode())
                             .build();
@@ -294,7 +316,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private boolean updateProductImg(List<ProductImgRQ> images) {
+    private boolean updateProductImg(List<ProductImgRQ> images, Long productId) {
         try {
             if (!images.isEmpty()) {
                 log.debug("Begin update product images");
@@ -305,6 +327,10 @@ public class ProductServiceImpl implements ProductService {
                             .image(productImgRQ.getImage())
                             .status(productImgRQ.getStatus())
                             .build();
+                    if (productImgRQ.getProductId() == null) {
+                        productImg.setProductId(productId);
+                        productImg.setStatus(StatusCode.ACTIVE.getCode());
+                    }
                     productImgRepository.save(productImg);
                 }
             }

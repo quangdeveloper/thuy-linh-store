@@ -33,11 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> searchActive(String keyword,
                          Pageable pageable);
 
-    @Modifying
-    @Query("update Product u set u.status = :status where u.id = :id ")
-    Integer updateStatus(Long id,
-                         Integer status);
-
     @Query("select u from Product u where u.id = :id")
     Product findByID(Long id);
 

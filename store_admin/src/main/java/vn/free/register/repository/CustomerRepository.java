@@ -24,11 +24,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                           Integer status,
                           Pageable pageable);
 
-    @Modifying
-    @Query("update Customer u set u.status = :status where u.id = :id ")
-    Integer updateStatus(Long id,
-                         Integer status);
-
     @Query("select u from Customer u where u.id = :id")
     Customer findByID(Long id);
 

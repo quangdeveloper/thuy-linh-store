@@ -207,8 +207,11 @@ public class CustomerServiceImpl implements CustomerService {
                         .message(ResponseCode.NOT_EXISTS.getDesc(OBJECT))
                         .build();
             }
+            customer.setStatus(customerRQ.getStatus());
+            customer.setUpdatedBy(SecurityUtil.getCurrentUsernameId());
+            customer.setUpdatedDate(new Date());
+            customerRepository.save(customer);
 
-            customerRepository.updateStatus(customerRQ.getId(), customerRQ.getStatus());
             log.error("Update status customer successful.");
             return ActionRes.builder()
                     .code(ResponseCode.UPDATE_SUCCESS.getCode())
