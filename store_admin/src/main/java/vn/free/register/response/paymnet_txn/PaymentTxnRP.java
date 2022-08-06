@@ -4,7 +4,8 @@ package vn.free.register.response.paymnet_txn;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import vn.free.register.entity.Customer;
+import vn.free.register.response.customer.CustomerRP;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class PaymentTxnRP {
 
     private Long id;
 
-    private Customer customer;
+    private CustomerRP customer;
 
     private String productIds;
 

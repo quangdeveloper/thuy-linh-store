@@ -21,6 +21,7 @@ import vn.free.register.request.paymnet_txn.PaymentTxnRQ;
 import vn.free.register.request.paymnet_txn.PaymentTxnSearch;
 import vn.free.register.response.ActionRes;
 import vn.free.register.response.ResponseDTO;
+import vn.free.register.response.customer.CustomerRP;
 import vn.free.register.response.paymnet_txn.PaymentTxnDetailRP;
 import vn.free.register.response.paymnet_txn.PaymentTxnRP;
 import vn.free.register.service.PaymentTxnService;
@@ -320,9 +321,15 @@ public class PaymentTxnServiceImpl implements PaymentTxnService {
     }
 
     private PaymentTxnRP convertFromPaymentTxn(PaymentTxn paymentTxn) {
+
+        Customer customer = customerRepository.getById(paymentTxn.getCustomerId());
+        CustomerRP customerRP = null;
+        if (customer != null) {
+            customerRP = fromCustomer(customer);
+        }
         return PaymentTxnRP.builder()
                 .id(paymentTxn.getId())
-                .customer(customerRepository.getById(paymentTxn.getCustomerId()))
+                .customer(customerRP)
                 .productIds(paymentTxn.getProductIds())
                 .txnCount(paymentTxn.getTxnCount())
                 .totalAmount(paymentTxn.getTotalAmount())
@@ -333,6 +340,22 @@ public class PaymentTxnServiceImpl implements PaymentTxnService {
                 .updatedDate(paymentTxn.getUpdatedDate())
                 .updatedBy(paymentTxn.getUpdatedBy())
                 .paymentTxnDetails(new ArrayList<>())
+                .build();
+    }
+
+    private CustomerRP fromCustomer(Customer customer) {
+        return CustomerRP.builder()
+                .id(customer.getId())
+                .fullName(customer.getFullName())
+                .identifyCard(customer.getIdentifyCard())
+                .dateBorn(customer.getDateBorn())
+                .address(customer.getAddress())
+                .mobile(customer.getMobile())
+                .status(customer.getStatus())
+                .createdBy(customer.getCreatedBy())
+                .createdDate(customer.getCreatedDate())
+                .updatedBy(customer.getUpdatedBy())
+                .updatedDate(customer.getUpdatedDate())
                 .build();
     }
 
