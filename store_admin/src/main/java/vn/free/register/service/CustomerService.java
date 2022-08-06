@@ -13,6 +13,8 @@ public interface CustomerService {
 
     ResponseDTO searchCustomer(CustomerSearch search);
 
+    ResponseDTO getCustomerByID(CustomerRQ customerRQ);
+
     ActionRes createCustomer(CustomerRQ customerRQ);
 
     ActionRes updateCustomer(CustomerRQ customerRQ);

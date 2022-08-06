@@ -96,6 +96,13 @@ public class ProductServiceImpl implements ProductService {
     public ResponseDTO getProductById(ProductRQ productRQ) {
         try {
             log.debug("Begin get product by id: {}", productRQ);
+            if (productRQ.getId() == null || productRQ.getId() == 0) {
+                log.debug("Data request invalid.");
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
             Product product = productRepository.findByID(productRQ.getId());
             if (product == null) {
                 log.debug("Product not Existed. id: {} ", productRQ.getId());

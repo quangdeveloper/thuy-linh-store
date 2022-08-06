@@ -37,6 +37,46 @@ public class RequestTxnServiceImpl implements RequestTxnService {
     @Autowired
     private RequestTxnRepository reqTxnRepository;
 
+
+    @Override
+    public ResponseDTO getRequestTxnById(RequestTxnRQ requestTxnRQ) {
+        try {
+            log.debug("Begin get requestTxn by id: {}", requestTxnRQ);
+
+            if (requestTxnRQ.getId() == null || requestTxnRQ.getId() == 0) {
+                log.debug("Data request invalid.");
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+            RequestTxn requestTxn = reqTxnRepository.findByID(requestTxnRQ.getId());
+
+            if (requestTxn == null) {
+                log.debug("requestTxn not exists. ID: {}", requestTxn.getId());
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+
+            log.debug("Get requestTxn by id successful. {}", requestTxn);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .message(ResponseCode.SUCCESS.getDesc(OBJECT))
+                    .data(requestTxn)
+                    .build();
+        } catch (Exception ex) {
+            log.error("Get requestTxn by id ...fail. ", ex);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.ERROR.getCode())
+                    .message(ResponseCode.ERROR.getDesc(OBJECT))
+                    .data(Collections.EMPTY_LIST)
+                    .total(0L)
+                    .build();
+        }
+    }
+
     @Override
     public ResponseDTO searchRequestTxn(RequestTxnSearch search) {
         try {

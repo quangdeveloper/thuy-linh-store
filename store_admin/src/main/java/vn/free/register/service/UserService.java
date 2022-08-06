@@ -8,6 +8,7 @@ import vn.free.register.response.ResponseDTO;
 public interface UserService {
 
     ResponseDTO searchUser(UserSearch search);
+    ResponseDTO getUserById(UserRQ userRQ);
     ActionRes createUser(UserRQ userRQ);
     ActionRes updateUser(UserRQ userRQ);
     ActionRes updateStatusUser(UserRQ userRQ);

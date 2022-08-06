@@ -65,6 +65,44 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
+    public ResponseDTO getCustomerByID(CustomerRQ customerRQ) {
+        try {
+            log.debug("Begin get customer by id: {}", customerRQ);
+
+            if (customerRQ.getId() == null || customerRQ.getId() == 0) {
+                log.debug("Data request invalid.");
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+            Customer customer = customerRepository.findByID(customerRQ.getId());
+
+            if (customer == null) {
+                log.debug("Customer not exists. ID: {}", customerRQ.getId());
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+
+            log.debug("Get customer by id successful. {}", customer);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .message(ResponseCode.SUCCESS.getDesc(OBJECT))
+                    .data(customer)
+                    .build();
+        } catch (Exception ex) {
+            log.error("Get customer by id ...fail. ", ex);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.ERROR.getCode())
+                    .message(ResponseCode.ERROR.getDesc(OBJECT))
+                    .data(Collections.EMPTY_LIST)
+                    .total(0L)
+                    .build();
+        }
+    }
 
     @Override
     public ResponseDTO searchCustomer(CustomerSearch search) {

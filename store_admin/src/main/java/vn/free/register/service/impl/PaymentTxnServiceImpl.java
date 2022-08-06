@@ -54,7 +54,15 @@ public class PaymentTxnServiceImpl implements PaymentTxnService {
     @Override
     public ResponseDTO getPaymentTxnById(PaymentTxnRQ search) {
         try {
-            log.debug("Begin get product by id: {}", search);
+            log.debug("Begin get paymentTxn by id: {}", search);
+
+            if (search.getId() == null || search.getId() == 0){
+                log.debug("Data request invalid");
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
             PaymentTxn paymentTxn = paymentTxnRepository.findByID(search.getId());
             if (paymentTxn == null) {
                 log.debug("PaymentTxn not Existed. id: {} ", search.getId());
@@ -82,7 +90,7 @@ public class PaymentTxnServiceImpl implements PaymentTxnService {
                     .data(paymentTxnRP)
                     .build();
         } catch (Exception ex) {
-            log.error("Get product by id ...fail. ", ex);
+            log.error("Get paymentTxn by id ...fail. ", ex);
             return ResponseDTO.builder()
                     .code(ResponseCode.ERROR.getCode())
                     .message(ResponseCode.ERROR.getDesc(OBJECT))

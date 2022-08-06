@@ -11,6 +11,8 @@ public interface RequestTxnService {
 
     ResponseDTO searchRequestTxn(RequestTxnSearch search);
 
+    ResponseDTO getRequestTxnById(RequestTxnRQ userRQ);
+
     ActionRes createRequestTxn(RequestTxnRQ userRQ);
 
     ActionRes updateStatusRequestTxn(RequestTxnRQ userRQ);

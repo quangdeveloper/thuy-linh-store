@@ -34,6 +34,15 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PostMapping("/get-by-id")
+    public ResponseEntity<Object> getByIdUser(@RequestBody UserRQ userRQ) {
+
+        log.info("Input get by id user: {}", gson.toJson(userRQ));
+        ResponseDTO response = userService.getUserById(userRQ);
+        log.info("Output get by id user: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody UserRQ userRQ) {
 

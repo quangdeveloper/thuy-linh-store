@@ -35,6 +35,45 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    public ResponseDTO getUserById(UserRQ userRQ) {
+        try {
+            log.debug("Begin get user by id: {}", userRQ);
+
+            if (userRQ.getId() == null || userRQ.getId() == 0) {
+                log.debug("Data request invalid.");
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+            User user = userRepository.findByID(userRQ.getId());
+
+            if (user == null) {
+                log.debug("User not exists. ID: {}", userRQ.getId());
+                return ResponseDTO.builder()
+                        .code(ResponseCode.INVALID_DATA.getCode())
+                        .message(ResponseCode.INVALID_DATA.getDesc(OBJECT))
+                        .build();
+            }
+
+            log.debug("Get by id user successful. {}", user);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .message(ResponseCode.SUCCESS.getDesc(OBJECT))
+                    .data(user)
+                    .build();
+        } catch (Exception ex) {
+            log.error("Get user by id ...fail. ", ex);
+            return ResponseDTO.builder()
+                    .code(ResponseCode.ERROR.getCode())
+                    .message(ResponseCode.ERROR.getDesc(OBJECT))
+                    .data(Collections.EMPTY_LIST)
+                    .total(0L)
+                    .build();
+        }
+    }
+
+    @Override
     public ResponseDTO searchUser(UserSearch search) {
 
         try {

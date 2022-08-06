@@ -50,5 +50,13 @@ public class RequestTxnController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PostMapping("/get-by-id")
+    public ResponseEntity<Object> getByID(@RequestBody RequestTxnRQ requestTxnRQ) {
+
+        log.info("Input get requestTxn by id: {}", gson.toJson(requestTxnRQ));
+        ResponseDTO response = requestTxnService.getRequestTxnById(requestTxnRQ);
+        log.info("Output get requestTxn by id: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
+    }
 
 }

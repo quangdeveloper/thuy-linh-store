@@ -50,6 +50,16 @@ public class CustomerController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PostMapping("/get-by-id")
+    public ResponseEntity<Object> getCustomerById(@RequestBody CustomerRQ customerRQ) {
+
+        log.info("Input create customer: {}", gson.toJson(customerRQ));
+        ResponseDTO response = customerService.getCustomerByID(customerRQ);
+        log.info("Output create customer: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<Object> createCustomer(@RequestBody CustomerRQ customerRQ) {
 

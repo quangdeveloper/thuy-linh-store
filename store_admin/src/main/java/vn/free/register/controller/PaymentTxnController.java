@@ -70,4 +70,13 @@ public class PaymentTxnController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<Object> updatePayment(@RequestBody PaymentTxnRQ paymentTxnRQ) {
+
+        log.info("Input create paymentTxn: {}", gson.toJson(paymentTxnRQ));
+        ActionRes response = paymentTxnService.updatePayment(paymentTxnRQ);
+        log.info("Output create paymentTxn: {}", gson.toJson(response));
+        return ResponseEntity.ok().body(response);
+    }
+
 }
