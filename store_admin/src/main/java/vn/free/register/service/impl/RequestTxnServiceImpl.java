@@ -46,9 +46,20 @@ public class RequestTxnServiceImpl implements RequestTxnService {
                     search.getPageSize(),
                     Sort.by("id").descending());
 
+            Date fromDate = null;
+            Date toDate = null;
+            if (StringUtils.isNotEmpty(search.getFromDate())) {
+                fromDate = DateUtil.convertStringToDate(search.getFromDate(), "yyyy-MM-dd");
+            }
+            if (StringUtils.isNotEmpty(search.getToDate())) {
+                toDate = DateUtil.convertStringToDate(search.getToDate(), "yyyy-MM-dd");
+            }
+
             Page<RequestTxn> page = reqTxnRepository.search(
                     search.getKeyword(),
                     search.getStatus(),
+                    fromDate,
+                    toDate,
                     pageable);
 
             final long total = page.getTotalElements();
@@ -128,7 +139,11 @@ public class RequestTxnServiceImpl implements RequestTxnService {
                         .build();
             }
 
-            reqTxnRepository.updateStatus(requestTxnRQ.getId(), requestTxnRQ.getStatus());
+            requestTxn.setStatus(requestTxnRQ.getStatus());
+            requestTxn.setUpdatedBy(SecurityUtil.getCurrentUsernameId());
+            requestTxn.setUpdatedDate(new Date());
+            reqTxnRepository.save(requestTxn);
+
             log.error("Update status requestTxn successful.");
             return ActionRes.builder()
                     .code(ResponseCode.UPDATE_SUCCESS.getCode())

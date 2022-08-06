@@ -23,4 +23,10 @@ public class CustomerSearch {
     @JsonProperty("status")
     private Integer status;
 
+    @JsonProperty("from_date")
+    private String fromDate;
+
+    @JsonProperty("to_date")
+    private String toDate;
+
 }

@@ -23,10 +23,10 @@ public class RequestTxnSearch {
     @JsonProperty("status")
     private Integer status;
 
-    @JsonProperty("fromDate")
+    @JsonProperty("from_date")
     private String fromDate;
 
-    @JsonProperty("toDate")
+    @JsonProperty("to_date")
     private String toDate;
 
 }
