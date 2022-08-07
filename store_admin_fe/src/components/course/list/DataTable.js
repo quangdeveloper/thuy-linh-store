@@ -3,7 +3,6 @@ import React from "react";
 import {CommonItemLocalStorage} from "../../../shared/utils/CommonItemLocalStorage";
 import {getStatusCommon} from "../../../shared/utils/ConmonStatus";
 import Block_Unlock from "../block/Block_Unlock";
-import {withRouter} from "react-router";
 
 const DataTable = (props) => {
 
@@ -99,4 +98,4 @@ const DataTable = (props) => {
     );
 };
 
-export default withRouter(DataTable);
+export default DataTable;

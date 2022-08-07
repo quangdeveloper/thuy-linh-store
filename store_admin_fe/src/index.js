@@ -15,9 +15,9 @@ const Loading = () => {
 }
 
 ReactDOM.render(
-    <>
-        <App/>
-    </>,
+    <Suspense fallback={<Loading />}>
+        <AppComponent />
+    </Suspense>,
     document.getElementById('root')
 );
 

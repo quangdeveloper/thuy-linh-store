@@ -1,11 +1,8 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import {CommonItemLocalStorage} from "../../../shared/utils/CommonItemLocalStorage";
 import {getStatusCommon} from "../../../shared/utils/ConmonStatus";
-import {withRouter} from "react-router";
 
 const DetailCourse = (props) => {
 
-    // const course = JSON.parse(localStorage.getItem(CommonItemLocalStorage.item_detail));
     const course = {};
     const viewList = () => {
         props.history.push("/course");
@@ -98,4 +95,4 @@ const DetailCourse = (props) => {
         </Fragment>
     )
 }
-export default withRouter(DetailCourse)
+export default DetailCourse;
