@@ -18,11 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                       Integer status,
                       Pageable pageable);
 
-    @Modifying
-    @Query("update User u set u.status = :status where u.id = :id ")
-    Integer updateStatus(Long id,
-                         Integer status);
-
     @Query("select u from User u where u.username = :username and u.status = 1")
     User findByUsername(String username);
 

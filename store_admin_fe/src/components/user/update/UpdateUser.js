@@ -17,14 +17,6 @@ const UpdateUser = (props) => {
             errors.username = "Vui lòng nhập tài khoản"
         }
 
-        if (values.password && !values.re_password) {
-            errors.re_password = "Vui lòng nhập lại mật khẩu"
-        }
-
-        if (values.password && values.password !== values.re_password) {
-            errors.re_password = "Mật khẩu không khớp"
-        }
-
         if (!values.full_name) {
             errors.full_name = "Vui lòng nhập họ và tên"
         }
@@ -33,32 +25,40 @@ const UpdateUser = (props) => {
             errors.email = "Vui lòng nhập địa chỉ mail"
         }
 
-        if (!values.phone) {
-            errors.phone = "Vui lòng nhập số điện thoại"
+        if (!values.mobile) {
+            errors.mobile = "Vui lòng nhập số điện thoại"
         }
 
-        if (!values.role_id) {
-            errors.role_id = "Vui lòng nhập chọn phân quyền"
+        if (!values.gr_role_id) {
+            errors.gr_role_id = "Vui lòng nhập chọn phân quyền"
         }
+
+        if (!values.date_born) {
+            errors.date_born = "Vui lòng nhập ngày sinh"
+        }
+
+        if (!values.addess) {
+            errors.addess = "Vui lòng nhập địa chỉ"
+        }
+
         return errors
     };
 
     const user = JSON.parse(sessionStorage.getItem(CommonItemLocalStorage.item_update));
-    const role_default = user.roleId;
+    const role_default = {value: user.groupRoleId, label: user.groupRoleName};
 
     const initValue = {
         id: user.id,
         username: user.username,
-        password: null,
-        re_password: null,
         full_name: user.fullName,
         email: user.email,
-        phone: user.phone,
-        role_id: user.roleId,
+        mobile: user.mobile,
+        gr_role_id: user.groupRoleId,
+        date_born: user.dateBorn,
+        address: user.address
     };
 
     const [roleOptions, setRoleOptions] = useState([])
-
 
     const updateOldUser = (user) => {
         updateUser(user).then(res => {
@@ -91,7 +91,7 @@ const UpdateUser = (props) => {
                     <div className="container">
                         <div className="card card-custom">
                             <div className="card-header flex-wrap border-0 pt-6 pb-0">
-                                <h4>Cập nhật người dùng</h4>
+                                <h4>Cập nhật thông tin người dùng</h4>
                             </div>
                             <div className="card-body">
                                 <Formik
@@ -127,21 +127,6 @@ const UpdateUser = (props) => {
 
                                             <div className="col-lg-6">
                                                 <div className="form-group">
-                                                    <label>Mật khẩu</label>
-                                                    <FieldRequired/>
-                                                    <input type="password"
-                                                           className="form-control"
-                                                           name="password"
-                                                           value={values.password}
-                                                           onChange={handleChange}/>
-                                                    <InvalidField
-                                                        touch={touched.password}
-                                                        error={errors.password}/>
-                                                </div>
-                                            </div>
-
-                                            <div className="col-lg-6">
-                                                <div className="form-group">
                                                     <label>Họ và tên</label>
                                                     <FieldRequired/>
                                                     <input type="text"
@@ -154,18 +139,33 @@ const UpdateUser = (props) => {
                                                         error={errors.full_name}/>
                                                 </div>
                                             </div>
+
                                             <div className="col-lg-6">
                                                 <div className="form-group">
-                                                    <label>Nhâp lại mật khẩu</label>
+                                                    <label>Ngày sinh</label>
                                                     <FieldRequired/>
-                                                    <input type="password"
+                                                    <input type="date"
                                                            className="form-control"
-                                                           name="re_password"
-                                                           value={values.re_password}
+                                                           name="date_born"
+                                                           value={values.date_born}
                                                            onChange={handleChange}/>
                                                     <InvalidField
-                                                        touch={touched.re_password}
-                                                        error={errors.re_password}/>
+                                                        touch={touched.date_born}
+                                                        error={errors.date_born}/>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div className="form-group">
+                                                    <label>Địa chỉ</label>
+                                                    <FieldRequired/>
+                                                    <input type="text"
+                                                           className="form-control"
+                                                           name="address"
+                                                           value={values.address}
+                                                           onChange={handleChange}/>
+                                                    <InvalidField
+                                                        touch={touched.address}
+                                                        error={errors.address}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -184,16 +184,16 @@ const UpdateUser = (props) => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="form-group">
-                                                    <label>Phone</label>
+                                                    <label>Số điện thoại</label>
                                                     <FieldRequired/>
                                                     <input type="text"
                                                            className="form-control"
-                                                           name="phone"
-                                                           value={values.phone}
+                                                           name="mobile"
+                                                           value={values.mobile}
                                                            onChange={handleChange}/>
                                                     <InvalidField
-                                                        touch={touched.phone}
-                                                        error={errors.phone}/>
+                                                        touch={touched.mobile}
+                                                        error={errors.mobile}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -203,13 +203,11 @@ const UpdateUser = (props) => {
                                                     <Select placeholder="--Chọn phân quyền--"
                                                             options={roleOptions}
                                                             isSearchable={true}
-                                                            defaultValue={
-                                                                roleOptions.find(r => r.value = role_default)
-                                                            }
+                                                            defaultValue={role_default}
                                                             onChange={selectedOption => {
                                                                 let event = {
                                                                     target: {
-                                                                        name: 'role_id',
+                                                                        name: 'gr_role_id',
                                                                         value: selectedOption.value
                                                                     }
                                                                 }
@@ -219,8 +217,8 @@ const UpdateUser = (props) => {
                                                     </Select>
 
                                                     <InvalidField
-                                                        touch={touched.role_id}
-                                                        error={errors.role_id}/>
+                                                        touch={touched.gr_role_id}
+                                                        error={errors.gr_role_id}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">

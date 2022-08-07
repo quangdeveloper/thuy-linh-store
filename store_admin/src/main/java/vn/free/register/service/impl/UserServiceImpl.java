@@ -235,8 +235,11 @@ public class UserServiceImpl implements UserService {
                         .message(ResponseCode.NOT_EXISTS.getDesc(OBJECT))
                         .build();
             }
+            user.setStatus(userRQ.getStatus());
+            user.setUpdatedBy(SecurityUtil.getCurrentUsernameId());
+            user.setUpdatedDate(new Date());
 
-            userRepository.updateStatus(userRQ.getId(), userRQ.getStatus());
+            userRepository.save(user);
             log.error("Update status user successful.");
             return ActionRes.builder()
                     .code(ResponseCode.UPDATE_SUCCESS.getCode())

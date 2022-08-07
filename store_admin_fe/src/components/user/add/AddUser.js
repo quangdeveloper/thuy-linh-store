@@ -104,7 +104,6 @@ const AddUser = (props) => {
                                     initialValues={initValue}
                                     validate={validates}
                                     onSubmit={(values) => {
-
                                         createNewUser(values)
                                     }}
                                 >{({

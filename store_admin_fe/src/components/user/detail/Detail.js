@@ -54,6 +54,22 @@ const DetailUser = () => {
                                             <label className="col-4 mb-0">Trạng thái</label>
                                             <label className="col-8 mb-0">{getStatusCommon(user.status)}</label>
                                         </div>
+                                        <div className="form-group col-lg-6">
+                                            <label className="col-4 mb-0">Ngày tạo</label>
+                                            <label className="col-8 mb-0">{user.createdDate}</label>
+                                        </div>
+                                        <div className="form-group col-lg-6">
+                                            <label className="col-4 mb-0">Người tạo</label>
+                                            <label className="col-8 mb-0">{user.createdBy}</label>
+                                        </div>
+                                        <div className="form-group col-lg-6">
+                                            <label className="col-4 mb-0">Ngày cập nhật</label>
+                                            <label className="col-8 mb-0">{user.updatedDate}</label>
+                                        </div>
+                                        <div className="form-group col-lg-6">
+                                            <label className="col-4 mb-0">Người cập nhật</label>
+                                            <label className="col-8 mb-0">{user.updatedBy}</label>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
