@@ -20,6 +20,7 @@ public class UserRQ {
 
     private String address;
 
+    @JsonProperty("date_born")
     private String dateBorn;
 
     @JsonProperty("full_name")

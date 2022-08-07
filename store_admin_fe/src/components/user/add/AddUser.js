@@ -1,24 +1,16 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import {
-    getAllBrand,
-    getAllCategoryFeature, getAllCategoryProperties,
-    getAllMaterial,
-    getAllOrigin,
-    getAllProductCategory, getShopId
-} from "../../../shared/services/common.service";
 import {Formik} from "formik";
 import Select from "react-select";
-import {getServerUrl, handleSubmissionFormData} from "../../../shared/form_data_handler/submit-formdata";
 import FieldRequired from "../../../containers/required/FieldRequired";
 import InvalidField from "../../../containers/required/InvalidField";
 import {toast} from "react-toastify";
 import {createUser} from "../../../shared/services/user.service";
+import {getAllGroupRole} from "../../../shared/services/group_role.service";
 
 const AddUser = (props) => {
 
     const validates = values => {
         const errors = {};
-
 
         if (!values.username) {
             errors.username = "Vui lòng nhập tài khoản"
@@ -43,13 +35,22 @@ const AddUser = (props) => {
             errors.email = "Vui lòng nhập địa chỉ mail"
         }
 
-        if (!values.phone) {
-            errors.phone = "Vui lòng nhập số điện thoại"
+        if (!values.mobile) {
+            errors.mobile = "Vui lòng nhập số điện thoại"
         }
 
-        if (!values.role_id) {
-            errors.role_id = "Vui lòng nhập chọn phân quyền"
+        if (!values.gr_role_id) {
+            errors.gr_role_id = "Vui lòng nhập chọn phân quyền"
         }
+
+        if (!values.date_born) {
+            errors.date_born = "Vui lòng nhập ngày sinh"
+        }
+
+        if (!values.address) {
+            errors.address = "Vui lòng nhập địa chỉ"
+        }
+
         return errors
     };
 
@@ -59,18 +60,17 @@ const AddUser = (props) => {
         re_password: null,
         full_name: null,
         email: null,
-        phone: null,
-        role_id: null
+        mobile: null,
+        gr_role_id: null,
+        date_born: null,
+        address: null
     };
 
-    const [roleOptions, setRoleOptions] = useState([
-        {label: "Quyền Admin", value: 1}
-    ])
-
+    const [roleOptions, setRoleOptions] = useState([])
 
     const createNewUser = (user) => {
         createUser(user).then(res => {
-            if (res.data.code === "00") {
+            if (res.data.code === "01") {
                 toast.success("Thêm mới người dùng thành công !")
             } else toast.error(res.data.message)
         })
@@ -79,6 +79,16 @@ const AddUser = (props) => {
     const viewList = () => {
         window.location.href = "/user"
     }
+
+    useEffect(() => {
+        getAllGroupRole().then(response => {
+            if (response.data.code === "00") {
+                setRoleOptions(response.data.data.map(item => {
+                    return {value: item.id, label: item.name}
+                }));
+            }
+        });
+    }, [])
 
     return (
         <Fragment>
@@ -167,6 +177,34 @@ const AddUser = (props) => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="form-group">
+                                                    <label>Ngày sinh</label>
+                                                    <FieldRequired/>
+                                                    <input type="date"
+                                                           className="form-control"
+                                                           name="date_born"
+                                                           value={values.date_born}
+                                                           onChange={handleChange}/>
+                                                    <InvalidField
+                                                        touch={touched.date_born}
+                                                        error={errors.date_born}/>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div className="form-group">
+                                                    <label>Địa chỉ</label>
+                                                    <FieldRequired/>
+                                                    <input type="text"
+                                                           className="form-control"
+                                                           name="address"
+                                                           value={values.address}
+                                                           onChange={handleChange}/>
+                                                    <InvalidField
+                                                        touch={touched.address}
+                                                        error={errors.address}/>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div className="form-group">
                                                     <label>Email</label>
                                                     <FieldRequired/>
                                                     <input type="text"
@@ -185,12 +223,12 @@ const AddUser = (props) => {
                                                     <FieldRequired/>
                                                     <input type="text"
                                                            className="form-control"
-                                                           name="phone"
-                                                           value={values.phone}
+                                                           name="mobile"
+                                                           value={values.mobile}
                                                            onChange={handleChange}/>
                                                     <InvalidField
-                                                        touch={touched.phone}
-                                                        error={errors.phone}/>
+                                                        touch={touched.mobile}
+                                                        error={errors.mobile}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -203,7 +241,7 @@ const AddUser = (props) => {
                                                             onChange={selectedOption => {
                                                                 let event = {
                                                                     target: {
-                                                                        name: 'role_id',
+                                                                        name: 'gr_role_id',
                                                                         value: selectedOption.value
                                                                     }
                                                                 }
@@ -213,12 +251,13 @@ const AddUser = (props) => {
                                                     </Select>
 
                                                     <InvalidField
-                                                        touch={touched.role_id}
-                                                        error={errors.role_id}/>
+                                                        touch={touched.gr_role_id}
+                                                        error={errors.gr_role_id}/>
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
-                                                <div className="modal-footer" style={{justifyContent: "space-between", padding: "1.5rem 0rem"}}>
+                                                <div className="modal-footer"
+                                                     style={{justifyContent: "space-between", padding: "1.5rem 0rem"}}>
                                                     <button type="button"
                                                             className="btn btn-bg-light"
                                                             data-dismiss="modal"
@@ -243,7 +282,6 @@ const AddUser = (props) => {
         </Fragment>
     )
 }
-
 
 
 export default AddUser

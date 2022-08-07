@@ -3,7 +3,6 @@ import SearchArea from "./SearchArea";
 import DataTable from "./DataTable";
 import Pagination from "react-js-pagination";
 import {searchRegister} from "../../../shared/services/register.service";
-import {getAllCourse} from "../../../shared/services/course.service";
 
 const RegisterAccepted = (props) => {
 
