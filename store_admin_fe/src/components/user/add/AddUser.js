@@ -181,7 +181,7 @@ const AddUser = (props) => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="form-group">
-                                                    <label>Phone</label>
+                                                    <label>Số điện thoại</label>
                                                     <FieldRequired/>
                                                     <input type="text"
                                                            className="form-control"

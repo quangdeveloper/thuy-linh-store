@@ -35,10 +35,10 @@ const DataTable = (props) => {
                         <tr key={idx}>
                             <td>{idx + 1 + (props.page_config.page_index - 1) * props.page_config.page_size}</td>
                             <td>{m.username}</td>
-                            <td>Quyền Admin</td>
+                            <td>{m.groupRoleName}</td>
                             <td>{m.fullName}</td>
                             <td>{m.email}</td>
-                            <td>{m.phone}</td>
+                            <td>{m.mobile}</td>
                             <td>{getStatusCommon(m.status)}</td>
                             <td>{m.createdBy}</td>
                             <td>

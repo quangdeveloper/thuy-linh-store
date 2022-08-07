@@ -11,17 +11,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.free.register.constant.ResponseCode;
 import vn.free.register.constant.StatusCode;
+import vn.free.register.entity.GroupRole;
 import vn.free.register.entity.User;
+import vn.free.register.repository.GroupRoleRepository;
 import vn.free.register.repository.UserRepository;
 import vn.free.register.request.user.UserSearch;
 import vn.free.register.request.user.UserRQ;
 import vn.free.register.response.ActionRes;
 import vn.free.register.response.ResponseDTO;
+import vn.free.register.response.user.UserRP;
 import vn.free.register.service.UserService;
+import vn.free.register.util.DateUtil;
 import vn.free.register.util.SecurityUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -33,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private GroupRoleRepository groupRoleRepository;
 
     @Override
     public ResponseDTO getUserById(UserRQ userRQ) {
@@ -60,7 +69,7 @@ public class UserServiceImpl implements UserService {
             return ResponseDTO.builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .message(ResponseCode.SUCCESS.getDesc(OBJECT))
-                    .data(user)
+                    .data(fromUser(user))
                     .build();
         } catch (Exception ex) {
             log.error("Get user by id ...fail. ", ex);
@@ -93,7 +102,7 @@ public class UserServiceImpl implements UserService {
             return ResponseDTO.builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .message(ResponseCode.SUCCESS.getDesc(OBJECT))
-                    .data(page.toList())
+                    .data(fromUserList(page.toList()))
                     .total(total)
                     .build();
         } catch (Exception ex) {
@@ -243,4 +252,61 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    private UserRP fromUser(User user) {
+
+        String grRoleName = StringUtils.EMPTY;
+        GroupRole groupRole = groupRoleRepository.findByID(user.getGroupRoleId());
+        if (groupRole != null) {
+            grRoleName = groupRole.getName();
+        }
+        return UserRP.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .fullName(user.getFullName())
+                .address(user.getAddress())
+                .mobile(user.getMobile())
+                .email(user.getEmail())
+                .dateBorn(user.getDateBorn())
+                .groupRoleId(user.getGroupRoleId())
+                .groupRoleName(grRoleName)
+                .status(user.getStatus())
+                .createdBy(user.getCreatedBy())
+                .createdDate(DateUtil.convertDateToString(user.getCreatedDate(), DateUtil.DATE_TIME_FORMAT_V1))
+                .updatedBy(user.getUpdatedBy())
+                .updatedDate(DateUtil.convertDateToString(user.getUpdatedDate(), DateUtil.DATE_TIME_FORMAT_V1))
+                .build();
+    }
+
+    private List<UserRP> fromUserList(List<User> list) {
+
+        List<UserRP> listRS = new ArrayList<>();
+        for (User user : list) {
+            String grRoleName = StringUtils.EMPTY;
+            GroupRole groupRole = groupRoleRepository.findByID(user.getGroupRoleId());
+            if (groupRole != null) {
+                grRoleName = groupRole.getName();
+            }
+            UserRP userRP = UserRP.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .fullName(user.getFullName())
+                    .address(user.getAddress())
+                    .mobile(user.getMobile())
+                    .email(user.getEmail())
+                    .dateBorn(user.getDateBorn())
+                    .groupRoleId(user.getGroupRoleId())
+                    .groupRoleName(grRoleName)
+                    .status(user.getStatus())
+                    .createdBy(user.getCreatedBy())
+                    .createdDate(DateUtil.convertDateToString(user.getCreatedDate(), DateUtil.DATE_TIME_FORMAT_V1))
+                    .updatedBy(user.getUpdatedBy())
+                    .updatedDate(DateUtil.convertDateToString(user.getUpdatedDate(), DateUtil.DATE_TIME_FORMAT_V1))
+                    .build();
+            listRS.add(userRP);
+        }
+        return listRS;
+    }
 }

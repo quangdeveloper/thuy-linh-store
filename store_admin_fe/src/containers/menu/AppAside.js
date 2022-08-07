@@ -14,7 +14,7 @@ const AppAside = props => {
         <div className="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
             <div className="brand flex-column-auto" id="kt_brand" kt-hidden-height="65">
                 <a href="/" className="brand-logo">
-                    <img alt="Logo" src="assets/media/logos/logo.png"/>
+                    <img alt="Logo" src="assets/media/logos/thuy_linh.png"/>
                 </a>
                 <button id="kt_aside_toggle" className="brand-toggle btn btn-sm px-0">
           <span className="svg-icon svg-icon svg-icon-xl">

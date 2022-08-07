@@ -12,7 +12,7 @@ const SearchArea = (props) => {
 
     const [statusOptions, setStatusOption] = useState([
         {label: "Tất cả", value: null},
-        {label: "Đang mở", value: 1},
+        {label: "Hoạt động", value: 1},
         {label: "Khóa", value: 2},
     ])
 
@@ -25,8 +25,6 @@ const SearchArea = (props) => {
                     keyword: values.keyword,
                     status: values.status,
                 };
-
-                console.log(data)
                 props.search(data);
             }}
         >{({

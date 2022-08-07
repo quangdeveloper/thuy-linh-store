@@ -44,19 +44,13 @@ const UserManager = (props) => {
             page_size: page_config.page_size
         };
 
-        searchUser(data).then(res => {
-            const response = res.data;
-            if (response.code === "00"){
+        searchUser(data).then(response => {
+            if (response.data.code === "00"){
                 setDataTable(response.data.data);
                 setTotalItem(response.data.total);
             }
         })
     }
-
-    useEffect(() => {
-
-
-    }, [])
 
     useEffect(()=>{
         search();

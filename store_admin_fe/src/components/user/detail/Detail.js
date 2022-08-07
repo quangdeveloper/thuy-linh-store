@@ -56,7 +56,7 @@ const DetailUser = (props) => {
                             </div>
                             <div className="form-group col-lg-6">
                                 <label className="col-4 mb-0">Số điện thoại</label>
-                                <label className="col-8 mb-0">{user.phone}</label>
+                                <label className="col-8 mb-0">{user.mobile}</label>
                             </div>
                             <div className="form-group col-lg-6">
                                 <label className="col-4 mb-0">Phân quyền</label>

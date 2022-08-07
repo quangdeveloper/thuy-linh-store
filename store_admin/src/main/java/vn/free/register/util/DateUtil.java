@@ -1,6 +1,7 @@
 package vn.free.register.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,5 +24,19 @@ public class DateUtil {
             log.warn(" System error. Exception", exp);
             return new Date();
         }
+    }
+
+    public static String convertDateToString(Date request, String format) {
+        try{
+            if (request == null){
+                return StringUtils.EMPTY;
+            }
+            SimpleDateFormat df = new SimpleDateFormat(format);
+            return df.format(request);
+        }catch (Exception ex){
+            log.error("Convert date to string ....fail. ", ex);
+            return StringUtils.EMPTY;
+        }
+
     }
 }
