@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {Formik} from "formik";
 import Select from "react-select";
 import FieldRequired from "../../../containers/required/FieldRequired";
@@ -6,6 +6,7 @@ import InvalidField from "../../../containers/required/InvalidField";
 import {toast} from "react-toastify";
 import {updateUser} from "../../../shared/services/user.service";
 import {CommonItemLocalStorage} from "../../../shared/utils/CommonItemLocalStorage";
+import {getAllGroupRole} from "../../../shared/services/group_role.service";
 
 const UpdateUser = (props) => {
 
@@ -42,7 +43,7 @@ const UpdateUser = (props) => {
         return errors
     };
 
-    const user = JSON.parse(localStorage.getItem(CommonItemLocalStorage.item_update));
+    const user = JSON.parse(sessionStorage.getItem(CommonItemLocalStorage.item_update));
     const role_default = user.roleId;
 
     const initValue = {
@@ -56,16 +57,14 @@ const UpdateUser = (props) => {
         role_id: user.roleId,
     };
 
-    const [roleOptions, setRoleOptions] = useState([
-        {label: "Quyền Admin", value: 1}
-    ])
+    const [roleOptions, setRoleOptions] = useState([])
 
 
     const updateOldUser = (user) => {
         updateUser(user).then(res => {
-            if (res.data.code === "00") {
-                toast.success("Cập nhật người dùng thành công !")
-            } else{
+            if (res.data.code === "02") {
+                toast.success(res.data.message)
+            } else {
                 toast.error(res.data.message)
             }
         })
@@ -74,6 +73,16 @@ const UpdateUser = (props) => {
     const viewList = () => {
         window.location.href = "/user"
     }
+
+    useEffect(() => {
+        getAllGroupRole().then(response => {
+            if (response.data.code === "00") {
+                setRoleOptions(response.data.data.map(item => {
+                    return {value: item.id, label: item.name}
+                }));
+            }
+        });
+    }, [])
 
     return (
         <Fragment>
@@ -215,7 +224,8 @@ const UpdateUser = (props) => {
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
-                                                <div className="modal-footer" style={{justifyContent: "space-between", padding: "1.5rem 0rem"}}>
+                                                <div className="modal-footer"
+                                                     style={{justifyContent: "space-between", padding: "1.5rem 0rem"}}>
                                                     <button type="button"
                                                             className="btn btn-bg-light"
                                                             data-dismiss="modal"
@@ -240,7 +250,6 @@ const UpdateUser = (props) => {
         </Fragment>
     )
 }
-
 
 
 export default UpdateUser

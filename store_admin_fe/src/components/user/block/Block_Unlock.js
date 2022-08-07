@@ -18,7 +18,7 @@ const Block_Unlock = (props) => {
             status: user.status === 1 ? 2 : 1
         }
         changeStatusUser(data).then(res => {
-            if (res.data.code === "00")  toast.success(res.data.message);
+            if (res.data.code === "02")  toast.success(res.data.message);
             else toast.error(res.data.message);
             props.search();
         })

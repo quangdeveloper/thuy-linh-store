@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import React, {Fragment, useState, useEffect} from 'react'
+import React, { useState} from 'react'
 import Select from "react-select";
 
 
@@ -84,7 +84,6 @@ const SearchArea = (props) => {
                                         </span>
                         </button>
                     </div>
-
                 </div>
             </form>
         )}</Formik>)

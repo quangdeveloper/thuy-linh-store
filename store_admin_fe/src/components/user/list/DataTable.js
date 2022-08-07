@@ -1,17 +1,20 @@
 import Popup from "reactjs-popup";
 import React from "react";
 import {CommonItemLocalStorage} from "../../../shared/utils/CommonItemLocalStorage";
-import DetailUser from "../detail/Detail";
 import {getStatusCommon} from "../../../shared/utils/ConmonStatus";
 import Block_Unlock from "../block/Block_Unlock";
 
 const DataTable = (props) => {
 
-    const viewDetail = (course) => {
-        localStorage.setItem(CommonItemLocalStorage.item_update, JSON.stringify(course));
+    const updateUser = (user) => {
+        sessionStorage.setItem(CommonItemLocalStorage.item_update, JSON.stringify(user));
         window.location.href = "/user-update"
     }
 
+    const viewDetail = (user) => {
+        sessionStorage.setItem(CommonItemLocalStorage.item_update, JSON.stringify(user));
+        window.location.href = "/user-detail"
+    }
 
     return (
         <div className="table-responsive">
@@ -44,7 +47,7 @@ const DataTable = (props) => {
                             <td>
                                 <span>
                                        <button className="btn btn-sm btn-clean btn-icon"
-                                               onClick={event => viewDetail(m)}>
+                                               onClick={event => updateUser(m)}>
                                            <img src="assets/media/icon/Edit.svg" alt=""/>
                                        </button>
                                 </span>
@@ -53,12 +56,12 @@ const DataTable = (props) => {
                                          <Popup modal
                                                 closeOnDocumentClick={false}
                                                 trigger={
-                                             <button className="btn btn-sm btn-clean btn-icon ">
-                                                 <img src="assets/media/icon/Lock.svg" alt=""/>
-                                             </button>}>
-                                                   {close => <Block_Unlock close = {close}
-                                                                           search = {props.search}
-                                                                           item = {m}/>}
+                                                    <button className="btn btn-sm btn-clean btn-icon ">
+                                                        <img src="assets/media/icon/Lock.svg" alt=""/>
+                                                    </button>}>
+                                                   {close => <Block_Unlock close={close}
+                                                                           search={props.search}
+                                                                           item={m}/>}
                                               </Popup>
 
                                     </span>
@@ -66,24 +69,19 @@ const DataTable = (props) => {
                                          <Popup modal
                                                 closeOnDocumentClick={false}
                                                 trigger={
-                                             <button className="btn btn-sm btn-clean btn-icon">
-                                                 <img src="assets/media/icon/Unlock.svg" alt=""/>
-                                             </button>}>
-                                                  {close => <Block_Unlock close = {close}
-                                                                          search = {props.search}
-                                                                          item = {m}/>}
+                                                    <button className="btn btn-sm btn-clean btn-icon">
+                                                        <img src="assets/media/icon/Unlock.svg" alt=""/>
+                                                    </button>}>
+                                                  {close => <Block_Unlock close={close}
+                                                                          search={props.search}
+                                                                          item={m}/>}
                                               </Popup>
                                     </span>}
-                                <span data-toggle="tooltip" title="Xem chi tiết">
-                                   <Popup modal
-                                          closeOnDocumentClick={false}
-                                          trigger={
-                                              <button className="btn btn-sm btn-clean btn-icon">
-                                                  <img src="assets/media/icon/info-circle.svg" alt=""/>
-                                              </button>}>
-                                       {close => <DetailUser close = {close}
-                                                             item = {m}/>}
-                                   </Popup>
+                                <span>
+                                    <button className="btn btn-sm btn-clean btn-icon"
+                                               onClick={event => viewDetail(m)}>
+                                           <img src="assets/media/icon/info-circle.svg" alt=""/>
+                                    </button>
                                 </span>
                             </td>
                         </tr>
