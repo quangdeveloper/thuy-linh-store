@@ -1,6 +1,5 @@
-import React, {useState, useEffect, Fragment} from "react";
+import React, { Fragment} from "react";
 import {Formik} from "formik";
-import {updateProduct} from "../../../shared/services/product_shop.service";
 import {toast} from "react-toastify";
 import {changeStatusUser} from "../../../shared/services/user.service";
 

@@ -40,7 +40,7 @@ const UpdateUser = (props) => {
         if (!values.addess) {
             errors.addess = "Vui lòng nhập địa chỉ"
         }
-
+        console.log("pass validate: ", JSON.stringify(values));
         return errors
     };
 
@@ -61,6 +61,7 @@ const UpdateUser = (props) => {
     const [roleOptions, setRoleOptions] = useState([])
 
     const updateOldUser = (user) => {
+        console.log("values: ", JSON.stringify(user));
         updateUser(user).then(res => {
             if (res.data.code === "02") {
                 toast.success(res.data.message)
