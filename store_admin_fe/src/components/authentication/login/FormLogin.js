@@ -72,8 +72,8 @@ const FormLogin = props => {
            }) => (
             <form className="form" onSubmit={handleSubmit} id="kt_login_signin_form">
                 <div className="text-center pb-13 pt-lg-0 pt-5">
-                    <h3 className="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Register System</h3>
-                    <span className="text-muted">Hệ thống quản lý đăng kí học tiếng việt</span>
+                    <h3 className="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Thủy Linh Store</h3>
+                    <span className="text-muted">Hệ thống quản lý cửa hàng áo cưới Thủy Linh</span>
                 </div>
                 <div className="form-group">
                     <input
