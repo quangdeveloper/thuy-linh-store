@@ -1,12 +1,12 @@
 server:
-  port: 8083
+  port: 8089
 
 ### config he thong
 
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/thuy_linh?serverTimezone=GMT%2B7&useLegacyDatetimeCode=false
+    url: jdbc:mysql://localhost:3306/thuy_linh
     username: root
     password: quang1998
   jpa:
@@ -19,7 +19,7 @@ spring:
         format_sql: true
 app:
   jwt:
-    secret: KYIVtA7915PUEWTqTca74sENpw48u7nkzSJiJmitF7D2PJWOu
+    secret: ABCCCCCCCCCCCCCCCCCCC
     expiredTime: 6000000
 
 
